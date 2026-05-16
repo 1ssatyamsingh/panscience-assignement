@@ -5,7 +5,7 @@ import {ApiResponse} from '../utils/ApiResponse.js';
 
 const registerUser = asyncHandler(async (req, res) => {
   // get user details from frontend
-  const {email , password} = req.body;
+  const { email, password, role } = req.body;
 
   // validation - not empty
   if(
@@ -25,6 +25,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const user = await User.create({
     email,
     password,
+    role
   });
 
   // remove password and refreshToken field from response
@@ -95,5 +96,81 @@ const getCurrentUser = asyncHandler(async (req, res) => {
   );
 })
 
+const getAllUsers = asyncHandler(async (req, res) => {
 
-export { registerUser, loginUser ,getCurrentUser };
+  const {
+    page = 1,
+    limit = 10
+  } = req.query;
+
+  const skip =
+    (Number(page) - 1) * Number(limit);
+
+  const users = await User.find()
+    .select("-password")
+    .skip(skip)
+    .limit(Number(limit));
+
+  const totalUsers = await User.countDocuments();
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        users,
+        totalUsers,
+        currentPage: Number(page),
+        totalPages: Math.ceil(totalUsers / limit)
+      },
+      "Users fetched successfully"
+    )
+  );
+});
+
+const updateUser = asyncHandler(async (req, res) => {
+
+  const { email, role } = req.body;
+
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+
+  user.email = email || user.email;
+  user.role = role || user.role;
+
+  await user.save();
+
+  const updatedUser = await User.findById(user._id)
+    .select("-password");
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      updatedUser,
+      "User updated successfully"
+    )
+  );
+});
+
+const deleteUser = asyncHandler(async (req, res) => {
+
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+
+  await user.deleteOne();
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      {},
+      "User deleted successfully"
+    )
+  );
+});
+
+export { registerUser, loginUser ,getCurrentUser,getAllUsers , updateUser, deleteUser};

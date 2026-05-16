@@ -14,7 +14,18 @@ import { upload } from "../middlewares/multer.middleware.js";
 
 const router = Router();
 
-// create task
+/**
+ * @swagger
+ * /api/v1/tasks:
+ *   post:
+ *     summary: Create a new task
+ *     tags: [Tasks]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       201:
+ *         description: Task created successfully
+ */
 router.route("/")
 .post(
   verifyJWT,
@@ -22,7 +33,18 @@ router.route("/")
   createTask
 );
 
-// get all tasks
+/**
+ * @swagger
+ * /api/v1/tasks:
+ *   get:
+ *     summary: Get all tasks
+ *     tags: [Tasks]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Tasks fetched successfully
+ */
 router.route("/")
 .get(
   verifyJWT,
