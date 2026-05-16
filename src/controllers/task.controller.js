@@ -171,9 +171,23 @@ const updateTask = asyncHandler(async (req, res) => {
     throw new ApiError(403, "Access denied");
   }
 
+  // uploaded docs
+  let documents = task.documents;
+
+  if (req.files && req.files.length > 0) {
+
+    documents = req.files.map((file) => ({
+      fileName: file.filename,
+      filePath: file.path
+    }));
+  }
+
   const updatedTask = await Task.findByIdAndUpdate(
     req.params.id,
-    req.body,
+    {
+      ...req.body,
+      documents
+    },
     {
       new: true,
       runValidators: true
