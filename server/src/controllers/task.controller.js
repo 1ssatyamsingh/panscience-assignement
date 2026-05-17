@@ -37,8 +37,8 @@ const createTask = asyncHandler(async (req, res) => {
 
     req.files.forEach((file) => {
       documents.push({
-        fileName: file.filename,
-        filePath: file.path
+        fileName: file.originalname,
+        filePath: `/uploads/${file.filename}`
       });
     });
   }
