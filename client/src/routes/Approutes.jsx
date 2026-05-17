@@ -11,6 +11,7 @@ import Users from "../pages/Users";
 import MainLayout from "../layouts/MainLayout";
 
 import ProtectedRoute from "./ProtectedRoutes";
+import EditTask from "../pages/EditTask";
 
 const AppRoutes = () => {
   return (
@@ -38,6 +39,8 @@ const AppRoutes = () => {
 
           <Route path="create-task" element={<CreateTask />} />
 
+          <Route path="tasks/:id/edit" element={<EditTask />} />
+          
           <Route path="users" element={<Users />} />
         </Route>
 

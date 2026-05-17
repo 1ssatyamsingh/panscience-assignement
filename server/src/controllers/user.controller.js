@@ -127,6 +127,20 @@ const getAllUsers = asyncHandler(async (req, res) => {
   );
 });
 
+const getUserList = asyncHandler(async (req, res) => {
+
+  const users = await User.find()
+    .select("_id email");
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      users,
+      "Users fetched successfully"
+    )
+  );
+});
+
 const updateUser = asyncHandler(async (req, res) => {
 
   const { email, role } = req.body;
@@ -173,4 +187,4 @@ const deleteUser = asyncHandler(async (req, res) => {
   );
 });
 
-export { registerUser, loginUser ,getCurrentUser,getAllUsers , updateUser, deleteUser};
+export { registerUser, loginUser ,getCurrentUser,getAllUsers , updateUser, deleteUser, getUserList};

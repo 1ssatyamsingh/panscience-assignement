@@ -137,9 +137,12 @@ const Tasks = () => {
 
             {/* Actions */}
             <div className="flex gap-3 mt-6">
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">
+              <Link
+                to={`/tasks/${task._id}/edit`}
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+              >
                 Edit
-              </button>
+              </Link>
 
               <button
                 onClick={() => handleDelete(task._id)}

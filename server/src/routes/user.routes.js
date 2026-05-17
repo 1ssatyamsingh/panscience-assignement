@@ -6,7 +6,8 @@ import {
 
   getAllUsers,
   updateUser,
-  deleteUser
+  deleteUser,
+  getUserList
 
 } from "../controllers/user.controller.js";
 
@@ -72,6 +73,12 @@ router.route("/")
   verifyJWT,
   verifyAdmin,
   getAllUsers
+);
+
+router.route("/list")
+.get(
+  verifyJWT,
+  getUserList
 );
 
 router.route("/:id")
