@@ -8,7 +8,7 @@ import swaggerSpec from "./swagger.js";
 const app = express();
 
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: ["http://localhost:5173", "https://panscience-assignement.vercel.app"],
   credentials: true,
 }))
 app.use(morgan("dev"));
