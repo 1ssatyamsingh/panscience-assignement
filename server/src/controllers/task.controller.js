@@ -231,10 +231,53 @@ const deleteTask = asyncHandler(async (req, res) => {
   );
 });
 
+const getDashboardStats =
+asyncHandler(async (req, res) => {
+
+  const totalTasks =
+    await Task.countDocuments();
+
+  const completedTasks =
+    await Task.countDocuments({
+      status: "completed"
+    });
+
+  const pendingTasks =
+    await Task.countDocuments({
+      status: "pending"
+    });
+
+  const inProgressTasks =
+    await Task.countDocuments({
+      status: "in-progress"
+    });
+
+  const recentTasks =
+    await Task.find()
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .select("title status priority");
+
+  return res.status(200).json(
+
+    new ApiResponse(
+      200,
+      {
+        totalTasks,
+        completedTasks,
+        pendingTasks,
+        inProgressTasks,
+        recentTasks
+      },
+      "Dashboard stats fetched"
+    )
+  );
+});
+
 export {
   createTask,
   getTasks,
   getTaskById,
   updateTask,
-  deleteTask
+  deleteTask,getDashboardStats
 };

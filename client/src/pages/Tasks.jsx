@@ -77,11 +77,20 @@ const Tasks = () => {
         </select>
       </div>
 
-      {tasks.length === 0 && <p className="text-gray-500">No tasks found</p>}
+      {tasks.length === 0 && (
+        <div className="bg-white p-10 rounded-xl shadow text-center">
+          <h2 className="text-2xl font-bold mb-2">No Tasks Found</h2>
+
+          <p className="text-gray-500">Create your first task</p>
+        </div>
+      )}
       {/* Task Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {tasks.map((task) => (
-          <div key={task._id} className="bg-white p-6 rounded-xl shadow">
+          <div
+            key={task._id}
+            className="bg-white p-6 rounded-xl shadow hover:shadow-xl transition"
+          >
             <div className="flex justify-between items-start">
               <h2 className="text-xl font-semibold">{task.title}</h2>
 

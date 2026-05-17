@@ -1,4 +1,4 @@
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import { Outlet, Link, useNavigate, NavLink } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 
@@ -22,21 +22,45 @@ const MainLayout = () => {
         <h1 className="text-2xl font-bold mb-10">Task Manager</h1>
 
         <nav className="flex flex-col gap-4">
-          <Link to="/dashboard" className="hover:bg-gray-800 p-2 rounded-lg">
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) =>
+              `px-3 py-2 rounded-lg transition
+    ${isActive ? "bg-white text-black" : "hover:bg-gray-800"}`
+            }
+          >
             Dashboard
-          </Link>
+          </NavLink>
 
-          <Link to="/tasks" className="hover:bg-gray-800 p-2 rounded-lg">
+          <NavLink
+            to="/tasks"
+            className={({ isActive }) =>
+              `px-3 py-2 rounded-lg transition
+    ${isActive ? "bg-white text-black" : "hover:bg-gray-800"}`
+            }
+          >
             Tasks
-          </Link>
+          </NavLink>
 
-          <Link to="/create-task" className="hover:bg-gray-800 p-2 rounded-lg">
+          <NavLink
+            to="/create-task"
+            className={({ isActive }) =>
+              `px-3 py-2 rounded-lg transition
+    ${isActive ? "bg-white text-black" : "hover:bg-gray-800"}`
+            }
+          >
             Create Task
-          </Link>
+          </NavLink>
 
-          <Link to="/users" className="hover:bg-gray-800 p-2 rounded-lg">
+          <NavLink
+            to="/users"
+            className={({ isActive }) =>
+              `px-3 py-2 rounded-lg transition
+    ${isActive ? "bg-white text-black" : "hover:bg-gray-800"}`
+            }
+          >
             Users
-          </Link>
+          </NavLink>
 
           <button
             onClick={handleLogout}
@@ -50,9 +74,6 @@ const MainLayout = () => {
       {/* Main Content */}
       <main className="flex-1 p-6">
         {/* Navbar */}
-        <div className="bg-white shadow-md rounded-xl p-4 mb-6">
-          <h2 className="text-2xl font-semibold">Dashboard</h2>
-        </div>
 
         <Outlet />
       </main>

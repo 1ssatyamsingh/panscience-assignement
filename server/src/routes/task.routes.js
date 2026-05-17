@@ -5,7 +5,8 @@ import {
   getTasks,
   getTaskById,
   updateTask,
-  deleteTask
+  deleteTask,
+  getDashboardStats
 } from "../controllers/task.controller.js";
 
 import { verifyJWT } from "../middlewares/auth.middleware.js";
@@ -49,6 +50,12 @@ router.route("/")
 .get(
   verifyJWT,
   getTasks
+);
+
+router.route("/stats/dashboard")
+.get(
+  verifyJWT,
+  getDashboardStats
 );
 
 // get single task
