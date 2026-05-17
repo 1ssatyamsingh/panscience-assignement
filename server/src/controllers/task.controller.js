@@ -231,29 +231,37 @@ const deleteTask = asyncHandler(async (req, res) => {
   );
 });
 
-const getDashboardStats =
-asyncHandler(async (req, res) => {
+const getDashboardStats = asyncHandler(async (req, res) => {
+
+  // admin sees all tasks
+  const filter =
+    req.user.role === "admin"
+      ? {}
+      : { assignedTo: req.user._id };
 
   const totalTasks =
-    await Task.countDocuments();
+    await Task.countDocuments(filter);
 
   const completedTasks =
     await Task.countDocuments({
+      ...filter,
       status: "completed"
     });
 
   const pendingTasks =
     await Task.countDocuments({
+      ...filter,
       status: "pending"
     });
 
   const inProgressTasks =
     await Task.countDocuments({
+      ...filter,
       status: "in-progress"
     });
 
   const recentTasks =
-    await Task.find()
+    await Task.find(filter)
       .sort({ createdAt: -1 })
       .limit(5)
       .select("title status priority");
